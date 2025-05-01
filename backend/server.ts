@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
-import { chromium } from "playwright";
+import { chromium, ElementHandle } from "playwright";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -19,7 +19,6 @@ app.post("/api/scrape", async (req: Request, res: Response): Promise<void> => {
     return;
   }
 
-  // console.log("Scraping URL:", url);
   let browser = null;
 
   //* Get Credentials
@@ -27,7 +26,6 @@ app.post("/api/scrape", async (req: Request, res: Response): Promise<void> => {
   const password = process.env.LINKEDIN_PASSWORD;
 
   if (!email || !password) {
-    // console.error("LinkedIn credentials not found in environment variables.");
     res.status(500).json({
       error: "Server configuration error: Missing LinkedIn credentials.",
     });
@@ -44,7 +42,6 @@ app.post("/api/scrape", async (req: Request, res: Response): Promise<void> => {
     const page = await context.newPage();
 
     //* Login to LinkedIn
-    // console.log("Attempting LinkedIn login...");
     await page.goto("https://www.linkedin.com/login", {
       waitUntil: "domcontentloaded",
     });
@@ -58,36 +55,30 @@ app.post("/api/scrape", async (req: Request, res: Response): Promise<void> => {
     await page.fill("#password", password);
 
     // Click sign in using a more specific selector
-    await page.click('button[data-litms-control-urn="login-submit"]'); // Updated selector
+    await page.click('button[data-litms-control-urn="login-submit"]');
 
     // Wait for the profile picture/icon in the header
     await page.waitForSelector("img.global-nav__me-photo", { timeout: 120000 });
 
-    // console.log("Login successful.");
-
     //* Navigate to Target Profile URL
-    // console.log("Navigating to target profile:", url);
     await page.goto(url, { waitUntil: "domcontentloaded", timeout: 60000 });
 
     await page.waitForSelector("main", { timeout: 15000 });
 
     // Wait for Experience section header
-    // console.log("Waiting for Experience section header...");
     const experienceHeaderSelector =
-      'section:has(h2 span:has-text("Experience"))'; // Removed regex syntax
-    await page.waitForSelector(experienceHeaderSelector, { timeout: 15000 }); // Wait up to 15s
-    // console.log("Experience section header found.");
+      'section:has(h2 span:has-text("Experience"))';
+    await page.waitForSelector(experienceHeaderSelector, { timeout: 15000 });
 
     // Wait for Education section header (handle if missing)
     const educationHeaderSelector =
       'section:has(h2 span:has-text("Education"))';
     let educationSectionExists = false;
     try {
-      // console.log("Waiting for Education section header...");
-      await page.waitForSelector(educationHeaderSelector, { timeout: 10000 }); // Shorter timeout ok if section might be missing
-      // console.log("Education section header found.");
+      await page.waitForSelector(educationHeaderSelector, { timeout: 10000 });
+
       educationSectionExists = true;
-    } catch (eduError: any) {
+    } catch {
       console.warn(
         "Education section header not found within timeout (likely missing from profile). Skipping education scrape."
       );
@@ -111,14 +102,11 @@ app.post("/api/scrape", async (req: Request, res: Response): Promise<void> => {
     let photoUrl = "Photo URL not found";
 
     try {
-      // console.log(
-      //   `Attempting to find photo with logged-in selector: ${loggedInPhotoSelector}`
-      // );
       const photoElementHandle = await page.waitForSelector(
         loggedInPhotoSelector,
         {
           state: "visible",
-          timeout: 5000, // Shorter timeout for the first attempt
+          timeout: 5000,
         }
       );
 
@@ -126,12 +114,17 @@ app.post("/api/scrape", async (req: Request, res: Response): Promise<void> => {
         photoUrl =
           (await photoElementHandle.getAttribute("src")) ||
           "Photo URL attribute empty";
-        // console.log("Found photo using logged-in selector.");
       }
-    } catch (loggedInError: any) {
-      console.warn(
-        `Logged-in photo selector failed (${loggedInError.message}). Assuming photo not found as we require login now.`
-      );
+    } catch (loggedInError: unknown) {
+      if (loggedInError instanceof Error) {
+        console.warn(
+          `Logged-in photo selector failed (${loggedInError.message}). Assuming photo not found as we require login now.`
+        );
+      } else {
+        console.warn(
+          `Logged-in photo selector failed. Assuming photo not found as we require login now.`
+        );
+      }
 
       /*
       ? Fallback logic for logged-out state is commented out as login is required
@@ -167,7 +160,11 @@ app.post("/api/scrape", async (req: Request, res: Response): Promise<void> => {
     }
 
     //* Helper function to get text content or return default
-    const getText = async (element: any, selector: string, defaultVal = "") => {
+    const getText = async (
+      element: ElementHandle<HTMLElement | SVGElement>,
+      selector: string,
+      defaultVal = ""
+    ) => {
       const el = await element.$(selector);
       return el ? (await el.innerText()).trim() : defaultVal;
     };
@@ -179,9 +176,6 @@ app.post("/api/scrape", async (req: Request, res: Response): Promise<void> => {
       const experienceItems = await experienceSection.$$(
         "li.artdeco-list__item"
       );
-      // console.log(
-      //   `Found ${experienceItems.length} experience list items using selector 'li.artdeco-list__item'.`
-      // );
 
       if (experienceItems.length === 0) {
         console.warn(
@@ -307,13 +301,6 @@ app.post("/api/scrape", async (req: Request, res: Response): Promise<void> => {
         }
         */
 
-        // console.log(
-        //   `Item Data: T='${title}', C='${company}', D='${dateRange}', L='${location}', Desc='${description.substring(
-        //     0,
-        //     50
-        //   )}...'`
-        // );
-
         if (title || company) {
           workExperience.push({
             title: title || "N/A",
@@ -344,9 +331,6 @@ app.post("/api/scrape", async (req: Request, res: Response): Promise<void> => {
 
     if (educationSection) {
       const educationItems = await educationSection.$$("li.artdeco-list__item");
-      // console.log(
-      //   `Found ${educationItems.length} education list items using selector 'li.artdeco-list__item'.`
-      // );
 
       for (const item of educationItems) {
         const containerBase =
@@ -356,15 +340,15 @@ app.post("/api/scrape", async (req: Request, res: Response): Promise<void> => {
 
         // Updated Logged-in selectors based on detailed structure
         const loggedInSchoolSelector =
-          anchorTagInFirstDiv + ' > div span[aria-hidden="true"]'; // Span within the first div inside a
+          anchorTagInFirstDiv + ' > div span[aria-hidden="true"]';
         const loggedInDegreeSelector =
           anchorTagInFirstDiv +
-          ' > span:nth-of-type(1) > span[aria-hidden="true"]'; // Span in first sibling span inside a
+          ' > span:nth-of-type(1) > span[aria-hidden="true"]';
         const loggedInEduDateRangeSelector =
           anchorTagInFirstDiv +
-          ' > span:nth-of-type(2) > span.pvs-entity__caption-wrapper[aria-hidden="true"]'; // Specific span in second sibling span inside a
+          ' > span:nth-of-type(2) > span.pvs-entity__caption-wrapper[aria-hidden="true"]';
         const loggedInEduDescriptionSelector =
-          containerBase + ' > div:nth-of-type(2) li span[aria-hidden="true"]'; // Description selector remains the same
+          containerBase + ' > div:nth-of-type(2) li span[aria-hidden="true"]';
 
         /*
         ? Logged-out selectors are commented out as login is now required
@@ -497,21 +481,28 @@ app.post("/api/scrape", async (req: Request, res: Response): Promise<void> => {
       workExperience: workExperience,
       education: education,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error during scraping:", error);
     let errorMessage = "Failed to scrape LinkedIn profile.";
-    if (error.message?.includes("Timeout")) {
-      errorMessage =
-        "Scraping timed out. The page might be too slow, require login, or the structure changed.";
-    } else if (
-      error.message?.includes("Target page, context or browser has been closed")
-    ) {
-      errorMessage = "Browser context closed unexpectedly during scraping.";
-    } else if (error.message?.includes("selector")) {
-      errorMessage =
-        "Could not find expected elements on the page. LinkedIn structure might have changed.";
+    if (error instanceof Error) {
+      if (error.message.includes("Timeout")) {
+        errorMessage =
+          "Scraping timed out. The page might be too slow, require login, or the structure changed.";
+      } else if (
+        error.message?.includes(
+          "Target page, context or browser has been closed"
+        )
+      ) {
+        errorMessage = "Browser context closed unexpectedly during scraping.";
+      } else if (error.message?.includes("selector")) {
+        errorMessage =
+          "Could not find expected elements on the page. LinkedIn structure might have changed.";
+      }
     }
-    res.status(500).json({ error: errorMessage, details: error.message });
+    res.status(500).json({
+      error: errorMessage,
+      details: error instanceof Error ? error.message : String(error),
+    });
   } finally {
     if (browser) {
       await browser.close();

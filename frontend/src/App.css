@@ -1,18 +1,18 @@
 .App {
   text-align: center;
-  padding: 30px 20px; /* Increased padding */
-  max-width: 700px; /* Slightly wider max-width */
-  margin: 40px auto; /* More margin top */
+  padding: 30px 20px;
+  max-width: 700px;
+  margin: 40px auto;
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
-    "Segoe UI Symbol"; /* Common modern font stack */
+    "Segoe UI Symbol";
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .App h1 {
-  color: #2d3748; /* Darker heading */
+  color: #2d3748;
   margin-bottom: 30px;
 }
 
@@ -22,8 +22,8 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border-left-color: #4299e1; /* Match button blue */
-  margin: 20px auto; /* Center the spinner */
+  border-left-color: #4299e1;
+  margin: 20px auto;
   animation: spin 1s ease infinite;
 }
 
@@ -41,13 +41,12 @@
   margin-top: 20px;
   width: 100%;
   text-align: center;
-  color: #4a5568; /* Gray-700 */
+  color: #4a5568;
 }
 
 .error-message {
-  color: red; /* Base error color */
+  color: red;
   margin-top: 10px;
-  /* Specific error styles are in .radix-error */
 }
 
 /* Results Styles */
@@ -56,8 +55,8 @@
   width: 100%;
   text-align: center;
   padding: 20px;
-  background-color: #f7fafc; /* Very light gray background */
-  border: 1px solid #e2e8f0; /* Gray-200 border */
+  background-color: #f7fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 8px;
   max-width: 500px;
   margin-left: auto;
@@ -67,7 +66,7 @@
 .pdf-download-link {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #38a169; /* Tailwind green-600 */
+  background-color: #38a169;
   color: white;
   text-decoration: none;
   border-radius: 6px;
@@ -76,33 +75,33 @@
 }
 
 .pdf-download-link:hover {
-  background-color: #2f855a; /* Darker green */
+  background-color: #2f855a;
 }
 
 /* Radix UI Form Styles - Enhanced */
 .radix-form {
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Increased gap for better spacing */
-  align-items: stretch; /* Make children stretch */
+  gap: 15px;
+  align-items: stretch;
   margin-bottom: 25px;
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
-  width: 90%; /* Responsive width */
+  width: 90%;
 }
 
 .radix-label {
-  font-weight: 600; /* Slightly bolder */
+  font-weight: 600;
   font-size: 0.9rem;
-  color: #2d3748; /* Darker gray */
+  color: #2d3748;
   margin-bottom: 4px;
 }
 
 .radix-input {
-  padding: 12px 15px; /* Slightly larger padding */
-  border: 1px solid #cbd5e0; /* Lighter gray border */
-  border-radius: 6px; /* Slightly more rounded */
+  padding: 12px 15px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
   font-size: 1rem;
   width: 100%;
   box-sizing: border-box;
@@ -112,17 +111,13 @@
 
 .radix-input:focus {
   outline: none;
-  border-color: #4299e1; /* Tailwind blue-500 */
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.3); /* Softer focus ring */
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.3);
 }
 
 .radix-button {
-  padding: 12px 20px; /* More padding */
-  background-image: linear-gradient(
-    to bottom,
-    #4299e1,
-    #3182ce
-  ); /* Subtle gradient */
+  padding: 12px 20px;
+  background-image: linear-gradient(to bottom, #4299e1, #3182ce);
   color: white;
   border: none;
   border-radius: 6px;
@@ -137,25 +132,21 @@
 
 .radix-button:disabled {
   background-image: none;
-  background-color: #e2e8f0; /* Lighter gray disabled */
-  color: #a0aec0; /* Dim text */
+  background-color: #e2e8f0;
+  color: #a0aec0;
   cursor: not-allowed;
   box-shadow: none;
 }
 
 .radix-button:not(:disabled):hover {
-  background-image: linear-gradient(
-    to bottom,
-    #3182ce,
-    #2b6cb0
-  ); /* Darker gradient on hover */
+  background-image: linear-gradient(to bottom, #3182ce, #2b6cb0);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .radix-error {
-  margin-top: -8px; /* Pull up slightly closer to input */
-  margin-bottom: 0px; /* Remove extra space below */
-  color: #e53e3e; /* Tailwind red-600 */
+  margin-top: -8px;
+  margin-bottom: 0px;
+  color: #e53e3e;
   font-size: 0.875rem;
   width: 100%;
 }
@@ -165,5 +156,5 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 0; /* Add some vertical padding */
+  padding: 20px 0;
 }

@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { ResumeDocument } from "./ResumeDocument";
 import { useScrapeProfileMutation } from "../hooks/useScrapeProfile";
-import { LINKEDIN_PROFILE_REGEX, FILE_NAMES } from "../constants/config";
+import { LINKEDIN_PROFILE_REGEX } from "../utils/constants";
 
 import * as Label from "@radix-ui/react-label";
 
@@ -19,6 +19,9 @@ const FormSchema = z.object({
 });
 
 type IFormInput = z.infer<typeof FormSchema>;
+
+const resume_file_name = (name: string) =>
+  `${name.replace(/\s+/g, "_")}_Resume.pdf`;
 
 export const ProfileUrlForm: React.FC = () => {
   const {
@@ -39,18 +42,13 @@ export const ProfileUrlForm: React.FC = () => {
     data: scrapeData,
     error: mutationError,
     isPending,
-    isSuccess,
-    isError,
   } = useScrapeProfileMutation();
 
   const onFormSubmit: SubmitHandler<IFormInput> = async (data) => {
-    // console.log("Form submit, triggering mutation with URL:", data.linkedInUrl);
     await mutateAsync(data.linkedInUrl);
   };
 
   const linkedInUrl = watch("linkedInUrl");
-
-  // const displayFetchError = mutationError?.message || null;
 
   return (
     <div className="profile-url-form-container">
@@ -99,21 +97,18 @@ export const ProfileUrlForm: React.FC = () => {
         <p className="error-message">Error: {mutationError?.message}</p>
       )}
 
-      {isSuccess && scrapeData && linkedInUrl && !isPending && (
+      {scrapeData && linkedInUrl && (
         <div className="results-container">
           <PDFDownloadLink
             document={
               <ResumeDocument data={scrapeData} linkedInUrl={linkedInUrl} />
             }
-            fileName={FILE_NAMES.RESUME(scrapeData.name || "Resume")}
+            fileName={resume_file_name(scrapeData.name || "Resume")}
             className="pdf-download-link"
           >
             Download Resume PDF
           </PDFDownloadLink>
         </div>
-      )}
-      {isError && (
-        <p className="error-message">Error: {mutationError?.message}</p>
       )}
     </div>
   );
