@@ -109,13 +109,13 @@ The repo includes both the original (logged-out) and final (logged-in) scraper l
     ```bash
     npm start
     ```
-    - App runs on `http://localhost:3000`.
+    - App runs on `http://localhost:5173`.
 
 ## How to Use
 
 > ⚠️ Note: The backend will open a browser window to handle LinkedIn login. You may need to solve CAPTCHA or enter a code manually.
 
-1.  Go to `http://localhost:3000`.
+1.  Go to `http://localhost:5173`.
 2.  Enter a LinkedIn profile URL.
 3.  Click "Generate Resume".
 4.  Wait for scraping.
