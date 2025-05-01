@@ -6,7 +6,7 @@ Takes a LinkedIn profile URL and returns a generated PDF resume. Scrapes basic p
 
 I built the core MVP — public LinkedIn scraping, frontend integration, and PDF generation — within the first 1.5 hours.
 
-When LinkedIn began blocking public scraping via Playwright, I pivoted to authenticated scraping using credentials stored in a `.env` file. This required rebuilding the scraper from scratch since the logged-in DOM was more complex and deeply nested.
+When LinkedIn began blocking public scraping via Playwright, I pivoted to authenticated scraping using credentials stored in a `.env` file. This required rebuilding selectors for the more complex, deeply nested logged-in DOM, which took additional time.
 
 Once the scraper was functional, I polished the frontend using Tailwind, Shadcn, React Hook Form, Zod, React Query, and modular components to align with a modern stack.
 
