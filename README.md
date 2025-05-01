@@ -60,7 +60,7 @@ The repo includes both the original (logged-out) and final (logged-in) scraper l
 1.  **Clone repo:**
     ```bash
     git clone <repository_url>
-    cd linkedin-to-resume
+    cd simple-closure-take-home
     ```
 2.  **Install Backend:**
     ```bash
@@ -73,7 +73,7 @@ The repo includes both the original (logged-out) and final (logged-in) scraper l
     ```
 4.  **Install Frontend:**
     ```bash
-    cd ../frontend
+    cd ../frontend-vite
     npm install
     ```
 5.  **Configure Backend Env:**
