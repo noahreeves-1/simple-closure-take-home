@@ -1,0 +1,137 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+## Project Overview
+
+### Phase 1
+PHASE 1: SETUP (30 min)
+
+Create folder structure: /linkedin-to-resume ├── backend └── frontend
+
+Backend setup:
+
+Initialize with npm init -y
+
+Install dependencies: express, cors, playwright, typescript, ts-node
+
+Create server.ts with:
+
+CORS
+
+Port: 3001
+
+Frontend setup:
+
+Create React app (CRA with TypeScript)
+
+Install @tanstack/react-query if using React Query
+
+Build simple form UI
+
+Confirm:
+
+Both backend and frontend run
+
+Frontend successfully fetches /api/ping
+
+✅ Checkpoint 1: Project is live end-to-end
+
+## Phase 2
+PHASE 2: BASIC SCRAPER MVP (1 hour)
+
+In backend /api/scrape?url=...:
+
+Launch Playwright
+
+Set User-Agent
+
+Navigate to LinkedIn URL
+
+Scrape:
+
+Name (e.g., from <h1>)
+
+Profile Picture URL (first reasonable <img>)
+
+Return minimal JSON: { "name": "Jane Doe", "photoUrl": "https://..." }
+
+Frontend:
+
+Submit URL, fetch data
+
+Display name and image
+
+Show loading/error states
+
+✅ Checkpoint 2: Input LinkedIn URL → see name & photo
+
+## Phase 3
+PHASE 3: EXPAND SCRAPING (1 hour)
+
+Scrape Work Experience:
+
+Anchor to "Experience" heading
+
+Extract: title, company, dateRange, description (if possible)
+
+Scrape Education:
+
+Anchor to "Education"
+
+Extract: degree, school, dateRange
+
+Update API JSON: { "name": "...", "photoUrl": "...", "workExperience": [{ title, company, dateRange, description }], "education": [{ degree, school, dateRange }] }
+
+✅ Checkpoint 3: Full profile data returned from backend
+
+## Phase 4
+PHASE 4: PDF RESUME WITH REACT-PDF (1–1.5 hours)
+
+Install @react-pdf/renderer
+
+Build ResumeDocument.tsx:
+
+Use <Document> + <Page wrap>
+
+Add fixed <View> for header and footer
+
+Layout:
+
+Profile Picture
+
+Name
+
+Work Experience
+
+Education
+
+Use <PDFDownloadLink> to generate download button
+
+✅ Checkpoint 4: Resume PDF rendered from real profile data
+
+## Phase 5
+PHASE 5: POLISH & DELIVERY (30–45 min)
+
+Frontend:
+
+Loading spinner during fetch
+
+Error message on failure
+
+Write README:
+
+Tech stack
+
+How to run
+
+Assumptions / tradeoffs
+
+Known issues
+
+Future improvements
+
+Git: git add . git commit -m "Final working version" git push origin main
+
+✅ Final Checkpoint: MVP complete, PDF clean, repo pushable

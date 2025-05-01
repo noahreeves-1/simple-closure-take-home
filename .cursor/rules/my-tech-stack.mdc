@@ -1,0 +1,24 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# TECH STACK
+
+Frontend:
+- React (TypeScript)
+- @react-pdf/renderer
+- Tanstack Query
+- React Hook Form
+- Zod
+
+Backend:
+- Node.js
+- Express
+- TypeScript
+- Playwright
+
+Other:
+- Cursor (AI-assisted development)
+- REST API
+- Git for version control

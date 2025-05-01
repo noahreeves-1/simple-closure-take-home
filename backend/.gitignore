@@ -1,0 +1,18 @@
+# Environment variables
+.env
+
+# Node modules
+node_modules
+
+# Build output
+dist
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Misc
+.DS_Store 
