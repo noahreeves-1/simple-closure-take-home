@@ -8,7 +8,7 @@ I built the core MVP — public LinkedIn scraping, frontend integration, and PDF
 
 When LinkedIn began blocking public scraping via Playwright, I pivoted to authenticated scraping using credentials stored in a `.env` file. This required rebuilding selectors for the more complex, deeply nested logged-in DOM, which took additional time.
 
-Once the scraper was functional, I polished the frontend using Tailwind, Shadcn, React Hook Form, Zod, React Query, and modular components to align with a modern stack.
+Once the scraper was functional, I polished the frontend using a modern stack and modular components.
 
 I tried implementing dynamic page numbers in the PDF footer, but the solution from the documentation didn’t work as expected.
 
@@ -26,11 +26,12 @@ For full transparency, I went slightly over the 4-hour time limit due to the une
 - **Frontend:**
   - React
   - TypeScript
+  - Tailwind
+  - Shadcn
   - React Hook Form
   - Zod
   - TanStack Query
   - `@react-pdf/renderer`
-  - Tailwind
   - Vite
 - **Backend:**
   - Node.js
