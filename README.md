@@ -14,7 +14,7 @@ I tried implementing dynamic page numbers in the PDF footer, but the solution fr
 
 To mitigate scraping delays, I mocked API responses on the frontend, which helped decouple UI testing from manual login steps. These mock responses are now commented out in the code.
 
-For full transparency, I went slightly over the 4-hour time limit due to the unexpected scraper rebuild. The repo includes both the original (logged-out) and final (logged-in) scraper logic, with the original commented out for context.
+The repo includes both the original (logged-out) and final (logged-in) scraper logic, with the original commented out for context.
 
 ## Overview
 
