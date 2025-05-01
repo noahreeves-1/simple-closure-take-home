@@ -6,15 +6,15 @@ Takes a LinkedIn profile URL and returns a generated PDF resume. Scrapes basic p
 
 I built the core MVP — public LinkedIn scraping, frontend integration, and PDF generation — within the first 1.5 hours.
 
-While refining the frontend, LinkedIn began blocking public scraping via Playwright. I pivoted to authenticated scraping using credentials stored in a .env file, which required rebuilding selectors for the more complex, deeply nested logged-in DOM. Stabilizing the new scraper took additional time.
+When LinkedIn began blocking public scraping via Playwright, I pivoted to authenticated scraping using credentials stored in a `.env` file. This required rebuilding the scraper from scratch since the logged-in DOM was more complex and deeply nested.
 
-Once functional, I focused on frontend polish — adding React Hook Form, Zod, React Query, and modular components to reflect a modern production-ready stack.
+Once the scraper was functional, I polished the frontend using Tailwind, Shadcn, React Hook Form, Zod, React Query, and modular components to align with a modern stack.
 
-I initially planned to use Tailwind for styling but prioritized functionality, architecture, and clarity over visual polish. I also attempted dynamic page numbers in the PDF footer, but due to @react-pdf/renderer limitations and time constraints, used static text instead as a fallback.
+I tried implementing dynamic page numbers in the PDF footer, but the solution from the documentation didn’t work as expected.
 
-To speed up development during scraping delays, I temporarily mocked API responses in the frontend. These are now commented out but helped decouple UI testing from manual login steps.
+To mitigate scraping delays, I mocked API responses on the frontend, which helped decouple UI testing from manual login steps. These mock responses are now commented out in the code.
 
-For full transparency, I went slightly over the intended 4-hour scope due to the unexpected scraping pivot. The repo includes both the original (logged-out) and final (logged-in) scraping logic; the former is commented out for context.
+For full transparency, I went slightly over the 4-hour time limit due to the unexpected scraper rebuild. The repo includes both the original (logged-out) and final (logged-in) scraper logic, with the original commented out for context.
 
 ## Overview
 
@@ -30,7 +30,8 @@ For full transparency, I went slightly over the intended 4-hour scope due to the
   - Zod
   - TanStack Query
   - `@react-pdf/renderer`
-  - CSS
+  - Tailwind
+  - Vite
 - **Backend:**
   - Node.js
   - Express

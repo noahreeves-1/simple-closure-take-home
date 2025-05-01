@@ -11,6 +11,9 @@ Frontend:
 - Tanstack Query
 - React Hook Form
 - Zod
+- Tailwind
+- Shadcn
+- Vite
 
 Backend:
 - Node.js
