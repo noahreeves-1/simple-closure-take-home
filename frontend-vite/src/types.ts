@@ -1,4 +1,4 @@
-export interface WorkExperience {
+interface WorkExperience {
   title?: string;
   company?: string;
   dateRange?: string;
@@ -6,14 +6,14 @@ export interface WorkExperience {
   location?: string;
 }
 
-export interface Education {
+interface Education {
   degree?: string;
   school?: string;
   dateRange?: string;
   description?: string;
 }
 
-export interface ScrapeData {
+export interface ProfileData {
   name?: string;
   photoUrl?: string;
   workExperience: WorkExperience[];

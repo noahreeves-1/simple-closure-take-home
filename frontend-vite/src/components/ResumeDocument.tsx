@@ -1,10 +1,10 @@
 import React from "react";
 import { Page, Text, View, Document, Image, Link } from "@react-pdf/renderer";
-import { ScrapeData, WorkExperience, Education } from "../types";
+import { ProfileData } from "../types";
 import { resumeStyles as styles } from "./resumeStyles";
 
 interface ResumeDocumentProps {
-  data: ScrapeData;
+  data: ProfileData;
 }
 
 export const ResumeDocument: React.FC<ResumeDocumentProps> = ({
@@ -29,7 +29,7 @@ export const ResumeDocument: React.FC<ResumeDocumentProps> = ({
       {workExperience && workExperience.length > 0 && (
         <View style={styles.section}>
           <Text style={styles.subHeader}>Professional Experience</Text>
-          {workExperience.map((exp: WorkExperience) => (
+          {workExperience.map((exp) => (
             <View
               key={`${exp.company} - ${exp.dateRange}`}
               style={styles.listItem}
@@ -59,7 +59,7 @@ export const ResumeDocument: React.FC<ResumeDocumentProps> = ({
       {education && education.length > 0 && (
         <View style={styles.section}>
           <Text style={styles.subHeader}>Education</Text>
-          {education.map((edu: Education) => (
+          {education.map((edu) => (
             <View
               key={`${edu.school} - ${edu.dateRange}`}
               style={styles.educationItem}

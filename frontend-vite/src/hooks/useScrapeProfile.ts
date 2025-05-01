@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
-import { ScrapeData } from "@/types";
+import { ProfileData } from "@/types";
 
 // --- API Fetching Function ---
-const fetchScrapeData = async (url: string): Promise<ScrapeData> => {
+const fetchScrapeData = async (url: string): Promise<ProfileData> => {
   if (!url) {
     throw new Error("URL is required to fetch scrape data.");
   }
@@ -27,13 +27,13 @@ const fetchScrapeData = async (url: string): Promise<ScrapeData> => {
       }`
     );
   }
-  const data: ScrapeData = await response.json();
+  const data: ProfileData = await response.json();
 
   return data;
 };
 
 export const useScrapeProfileMutation = () => {
-  return useMutation<ScrapeData, Error, string>({
+  return useMutation<ProfileData, Error, string>({
     mutationFn: fetchScrapeData,
   });
 };

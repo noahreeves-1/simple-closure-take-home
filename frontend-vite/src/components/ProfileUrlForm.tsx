@@ -40,7 +40,7 @@ export const ProfileUrlForm: React.FC = () => {
 
   const {
     mutateAsync,
-    data: scrapeData,
+    data: profileData,
     error: mutationError,
     isPending,
   } = useScrapeProfileMutation();
@@ -49,7 +49,7 @@ export const ProfileUrlForm: React.FC = () => {
     await mutateAsync(data.linkedInUrl);
   };
 
-  const fileName = resumeFileName(scrapeData?.name || "Resume");
+  const fileName = resumeFileName(profileData?.name || "Resume");
 
   return (
     <div className="mt-8 sm:mx-auto w-full">
@@ -109,10 +109,10 @@ export const ProfileUrlForm: React.FC = () => {
         </div>
       )}
 
-      {scrapeData && (
+      {profileData && (
         <div className="mt-8 text-center">
           <PDFDownloadLink
-            document={<ResumeDocument data={scrapeData} />}
+            document={<ResumeDocument data={profileData} />}
             fileName={fileName}
           >
             {({ loading }) => (
