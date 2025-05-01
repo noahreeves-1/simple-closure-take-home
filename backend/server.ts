@@ -479,6 +479,7 @@ app.post("/api/scrape", async (req: Request, res: Response): Promise<void> => {
       name: name.trim(),
       photoUrl: photoUrl,
       workExperience: workExperience,
+      linkedInUrl: url,
       education: education,
     });
   } catch (error: unknown) {
